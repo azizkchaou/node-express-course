@@ -1,51 +1,31 @@
-const http = require('http');
-const {readFileSync, read} = require('fs');
+const express = require('express');
+const app = express()
 
-// get all files 
-const homePage = readFileSync('./navbar-app/index.html');
-const homeStyles = readFileSync('./navbar-app/styles.css');
-const homeImage = readFileSync('./navbar-app/logo.svg');
-const homeLogic = readFileSync('./navbar-app/browser-app.js');
+app.listen(5000 , () => {
+    console.log('server is listening on port 5000....');
+})
 
-const server = http.createServer((req, res) => {
-    //home page
-    if (req.url === '/') {
-        console.log(req.method);
-        res.writeHead(200 , {'content-type' : 'text/html'});
-        res.write(homePage);
-        res.end();
-    }
-    //styles
-    else if (req.url === '/styles.css') {
-        res.writeHead(200 , {'content-type' : 'text/css'});
-        res.write(homeStyles);
-        res.end();
-    }
-    //image/logo
-    else if (req.url === '/logo.svg') {
-        res.writeHead(200 , {'content-type' : 'image/svg+xml'});
-        res.write(homeImage);
-        res.end();
-    }
-    else if (req.url ==='/about') {
-        console.log(req.url);
-        res.writeHead(200 , {'content-type' : 'text/html'});
-        res.end('<h1>here is our short history</h1>');
-    }
-    //logic
-    else if (req.url === '/browser-app.js') {
-        res.writeHead(200 , {'content-type' : 'text/javascript'});
-        res.write(homeLogic);
-        res.end();
-    }
-    else {
-        res.writeHead(404 , {'content-type' : 'text/html'});
-        res.write(`
-        <h1>Ooops!</h1>
-        <p>we can't seem to find the page you are looking for</p>   
-        <a href="/">back home</a>
-        `);
-        res.end();
-    }
-});
-server.listen(5000);
+app.get('/' , (req  ,res) => {
+    console.log('user hit the home page(ressource)');
+    res.send('<h1> Home Page </h1>')
+}) 
+//the callback function will be invoked eahc time someone visits the route of home page
+
+app.get('/about' , (req  ,res) => {
+    console.log('user hit the about page');
+    res.send('<h1> About Page </h1>')
+})
+
+app.all('*' , (req  ,res) => {
+    res.status(404).send('<h1> Resource not found </h1>')
+})
+//the '*' means all routes that are not defined above it
+
+
+//app.get
+//app.post
+//app.put
+//app.delete
+//app.all
+//app.use
+//app.listen
