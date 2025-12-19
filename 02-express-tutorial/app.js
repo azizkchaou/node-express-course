@@ -1,23 +1,43 @@
 const express = require('express');
 const app = express();
-const logger = require('./logger');
-const authorize = require('./authorize');
-//req => middleware => res 
-app.use([logger, authorize]);
-app.get('/' , (req , res) => {
+let {people} = require('./data');
 
-    res.send('Home');
-});
-app.get('/about'  , (req , res) => {
-    res.send('About');
-});   
-app.get('/api/products' , (req , res) => {
-    res.send('Products');
-}
-);
-app.get('/api/items', (req , res) => {
-    res.send('Items');
-}); 
+//static assets
+app.use(express.static('./methods-public'));
+//parse forms 
+app.use(express.urlencoded({extended:false}));
+//parse json
+app.use(express.json());
+
+
+app.get('/api/people' , (req ,res) => {
+    res.status(200).json({success:true , data:people});
+})
+
+app.post('/login' , (req , res) => {
+    const {name} = req.body;
+    if (name) {
+        return res.status(200).send(`Welcome ${name}`);
+    }
+    return res.status(401).send('<h1> Please provide credentials </h1>');
+
+})
+
+app.post('/api/people' , (req, res) => {
+    const {name} = req.body;
+    if (!name) {
+        return res.status(400).json({success:false , msg:'Please provide name value'});
+    }
+    res.status(201).json({success:true , person:name});
+})
+
+app.post('/api/people/postman' , (req, res) => {
+    const {name} = req.body;
+    if (!name) {
+        return res.status(400).json({success:false , msg:'Please provide name value'});
+    }
+    res.status(201).json({success:true , data:[...people , name]});
+})
 
 app.listen(5000 , () => {
     console.log('Server is listening on port 5000...');
