@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-const {tasks} = require('./data/tasks');
-
+//const {tasks} = require('./data/tasks');
+const tasks = require('./routes/tasks');
+const connectDB = require('./db/connect');
+require('dotenv').config();
 //middlewares : 
 
 
@@ -24,10 +26,14 @@ app.all('*' , (req , res) => {
     res.status(404).send('<h1>resource not found</h1>');
 })
 
-app.listen(5000 , () => 
-{
-    console.log('server is listening on port 5000...')
-})
+const start = async () => {
+    try {
+        await connectDB(process.env.MONGO_URI); 
+        app.listen(5000 , () => { console.log('*****************server is listening on port 5000...***************************');})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 //api.get('/api/v1/tasks')               - get all the tasks 
 //api.post('api/v1/tasks')               - create new task 
@@ -35,9 +41,5 @@ app.listen(5000 , () =>
 //api.patch('/api/v1/tasks/:id')         - update task 
 //api.delete('/api/v1/tasks/:id')        - delete task 
 
+start();
 
-
-
-app.post('/api/v1/tasks' , (req ,res) => {
-    
-})

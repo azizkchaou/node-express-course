@@ -1,9 +1,10 @@
-let {tasks} = require('../data/tasks');
+//let {tasks} = require('../data/tasks');
+const Task = require('../models/Task');
 
 const getTasks = (req ,res) => {
     res.json(tasks);
 }
-const createTask = (req, res) => {
+/*const createTask = (req, res) => {
     const {name , completed} = req.body
     if (!name) {
         res.status(400)
@@ -11,6 +12,12 @@ const createTask = (req, res) => {
     }
     res.status(201).json({success : true , data : [...tasks , {id : tasks.length + 1 , name , completed}]});
 }
+*/
+const createTask = async (req , res) => {
+    const task =  await Task.create(req.body);
+    res.status(201).json({success : true , data : task});
+}
+
 
 const getTask = (req, res) => {
     const {id} = req.params ;
