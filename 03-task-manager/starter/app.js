@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
-//const {tasks} = require('./data/tasks');
 const tasks = require('./routes/tasks');
 const connectDB = require('./db/connect');
 require('dotenv').config();
+const errorHandlerMiddleware = require('./middleware/error-handler');
+const notFound = require('./middleware/not-found');
+
 //middlewares : 
-
-
 // static assets
 app.use(express.static('./public'));
 //parse forms 
@@ -15,15 +15,15 @@ app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 //routes
 app.use('/api/v1/tasks', require('./routes/tasks'));
+//not found middleware
+app.use(notFound);
+//error handler middleware
+app.use(errorHandlerMiddleware);
+
+
 
 app.get('/' , (req , res) => {
     res.sendFile('./public/index.html' , {root: __dirname});
-})
-
-
-
-app.all('*' , (req , res) => {
-    res.status(404).send('<h1>resource not found</h1>');
 })
 
 const start = async () => {
@@ -36,11 +36,6 @@ const start = async () => {
     }
 }
 
-//api.get('/api/v1/tasks')               - get all the tasks 
-//api.post('api/v1/tasks')               - create new task 
-//api.get('/api/v1/tasks/:id')           - get single task
-//api.patch('/api/v1/tasks/:id')         - update task 
-//api.delete('/api/v1/tasks/:id')        - delete task 
 
 start();
 
