@@ -18,7 +18,6 @@ const createTask = async (req , res) => {
     res.status(201).json({success : true , data : task});
 }
 
-
 const getTask = (req, res) => {
     const {id} = req.params ;
     const task = tasks.find((task) => task.id === Number(id));
