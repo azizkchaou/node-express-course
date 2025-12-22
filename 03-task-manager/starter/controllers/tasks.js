@@ -1,9 +1,65 @@
-//let {tasks} = require('../data/tasks');
 const Task = require('../models/Task');
 
-const getTasks = (req ,res) => {
-    res.json(tasks);
+const getTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find({});
+        return res.status(200).json({ success: true, data: tasks });
+    } catch (error) {
+        return res.status(500).json({ success: false, msg: error.message || 'Server error' });
+    }
 }
+
+const createTask = async (req, res) => {
+    try {
+        const task = await Task.create(req.body);
+        return res.status(201).json({ success: true, data: task });
+    } catch (error) {
+        return res.status(500).json({ success: false, msg: error.message || 'Server error' });
+    }
+}
+
+const getTask =  async (req, res) => {
+    const {id} = req.params ;
+    try {
+        const task = await Task.findById(id); 
+        return res.status(201).json({ success: true, data: task });
+    }catch(error){
+        return res.status(500).json({ success: false, msg: error.message || 'Server error' });
+    }
+}
+
+const deleteTask = async (req , res) => {
+    const {id} = req.params ;
+    try {
+        const task = await Task.findByIdAndDelete(id);
+        return res.status(200).json({success : true , data : task});
+    }catch(error){
+        return res.status(500).json({ success: false, msg: error.message || 'Server error' });
+    }
+}
+
+
+const updateTask = async (req , res) => {
+    const {id} =  req.params ;
+    try {
+        const task = await Task.findByIdAndUpdate(id , req.body , { new : true , runValidators : true});
+        return res.status(200).json({success : true , data : task});
+    }catch(error){
+        return res.status(500).json({ success: false, msg: error.message || 'Server error' });
+    }
+}
+
+
+module.exports = {
+    getTasks,
+    getTask,
+    createTask,
+    deleteTask,
+    updateTask
+}
+
+
+
 /*const createTask = (req, res) => {
     const {name , completed} = req.body
     if (!name) {
@@ -11,23 +67,9 @@ const getTasks = (req ,res) => {
         .json({success : false , msg : "please provide name value"});
     }
     res.status(201).json({success : true , data : [...tasks , {id : tasks.length + 1 , name , completed}]});
-}
-*/
-const createTask = async (req , res) => {
-    const task =  await Task.create(req.body);
-    res.status(201).json({success : true , data : task});
-}
+}*/
 
-const getTask = (req, res) => {
-    const {id} = req.params ;
-    const task = tasks.find((task) => task.id === Number(id));
-    if (!task) {
-        return res.status(404).json({success : false , msg : `no task with id ${id}`});
-    }
-    return res.status(200).json({success : true , data : task});
-}
-
-const deleteTask = (req, res) => {
+/*const deleteTask = (req, res) => {
     const {id} = req.params ;
     const task = tasks.find((task) => task.id === Number(id));
     if (task) {
@@ -35,9 +77,9 @@ const deleteTask = (req, res) => {
         return res.status(200).json({success : true , data : newtasks});
     }
     return res.status(404).json({success : false , msg : `no task with id ${id}`});
-}
+}*/
 
-const updateTask = (req , res) => {
+/*const updateTask = (req , res) => {
     const {id} = req.params ;
     const {name, completed} = req.body ;
     const task = tasks.find((task) => task.id === Number(id));
@@ -59,11 +101,4 @@ const updateTask = (req , res) => {
     return res.status(200)
     .json({success : true , data : newtasks});
 }
-
-module.exports = {
-    getTasks,
-    getTask,
-    createTask,
-    deleteTask,
-    updateTask
-}
+*/
