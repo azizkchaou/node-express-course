@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Filters - Store Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">📦 Store Manager</a>
+            <button class="navbar-toggle" id="navbarToggle">☰</button>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="add-product.html" class="nav-link" data-page="add">Add Product</a></li>
+                <li><a href="company.html" class="nav-link" data-page="company">Company Mgmt</a></li>
+                <li><a href="filters.html" class="nav-link active" data-page="filters">Advanced Search</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔍 Advanced Search & Filters</h1>
+            <p class="subtitle">Find products using advanced filtering options</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Filter Options Section -->
+            <section class="filters-section">
+                <h2>Search Options</h2>
+                <div class="advanced-filters">
+                    <!-- Filter by Name -->
+                    <div class="filter-box">
+                        <h3>Search by Name</h3>
+                        <div class="filter-content">
+                            <input type="text" id="nameInput" placeholder="Enter product name" maxlength="100">
+                            <button class="btn btn-primary" id="searchByNameBtn">Search</button>
+                        </div>
+                    </div>
+
+                    <!-- Filter by Price Range -->
+                    <div class="filter-box">
+                        <h3>Search by Max Price</h3>
+                        <div class="filter-content">
+                            <input type="number" id="priceInput" placeholder="Enter maximum price" min="0" step="0.01">
+                            <button class="btn btn-primary" id="searchByPriceBtn">Search</button>
+                        </div>
+                        <small>Shows products at or below this price</small>
+                    </div>
+
+                    <!-- Filter by Company -->
+                    <div class="filter-box">
+                        <h3>Filter by Company</h3>
+                        <div class="filter-content">
+                            <select id="companySelect">
+                                <option value="">Select Company</option>
+                                <option value="ikea">IKEA</option>
+                                <option value="liddy">Liddy</option>
+                                <option value="caressa">Caressa</option>
+                                <option value="marcos">Marcos</option>
+                            </select>
+                            <button class="btn btn-primary" id="searchByCompanyBtn">Search</button>
+                        </div>
+                    </div>
+
+                    <!-- Reset Filters -->
+                    <div class="filter-box">
+                        <h3>Actions</h3>
+                        <div class="filter-content">
+                            <button class="btn btn-secondary" id="resetFiltersBtn">Reset All Filters</button>
+                            <button class="btn btn-primary" id="loadAllBtn">Load All Products</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <h2>Results (<span id="resultCount">0</span>)</h2>
+                <div id="activeFilters" class="active-filters" style="display: none;">
+                    <p>Filters Applied: <span id="activeFiltersText"></span></p>
+                </div>
+                
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+
+                <div id="resultsContainer" class="products-grid">
+                    <!-- Search results will be shown here -->
+                </div>
+
+                <div id="noResults" class="no-products" style="display: none;">
+                    <p>No products found matching your search criteria.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/filters.js"></script>
+</body>
+</html>

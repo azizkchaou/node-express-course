@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Management - Store Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">📦 Store Manager</a>
+            <button class="navbar-toggle" id="navbarToggle">☰</button>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="add-product.html" class="nav-link" data-page="add">Add Product</a></li>
+                <li><a href="company.html" class="nav-link active" data-page="company">Company Mgmt</a></li>
+                <li><a href="filters.html" class="nav-link" data-page="filters">Advanced Search</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🏢 Company Management</h1>
+            <p class="subtitle">Manage products by company with bulk operations</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Company Selection Section -->
+            <section class="company-section">
+                <h2>Select Company</h2>
+                <div class="company-grid">
+                    <button class="company-card" data-company="ikea">
+                        <div class="company-icon">🪑</div>
+                        <div class="company-name">IKEA</div>
+                    </button>
+                    <button class="company-card" data-company="liddy">
+                        <div class="company-icon">🛋️</div>
+                        <div class="company-name">Liddy</div>
+                    </button>
+                    <button class="company-card" data-company="caressa">
+                        <div class="company-icon">🪑</div>
+                        <div class="company-name">Caressa</div>
+                    </button>
+                    <button class="company-card" data-company="marcos">
+                        <div class="company-icon">🛏️</div>
+                        <div class="company-name">Marcos</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Selected Company Section -->
+            <section class="selected-company-section" id="selectedCompanySection" style="display: none;">
+                <h2>Products from <span id="selectedCompanyName"></span></h2>
+                
+                <!-- Bulk Actions -->
+                <div class="bulk-actions-section">
+                    <h3>Bulk Actions</h3>
+                    <div class="bulk-actions">
+                        <div class="action-group">
+                            <label for="bulkRating">Update Rating (0-5):</label>
+                            <div class="action-input-group">
+                                <input type="number" id="bulkRating" min="0" max="5" step="0.1">
+                                <button class="btn btn-warning" id="updateRatingBtn">Update All</button>
+                            </div>
+                        </div>
+                        <div class="action-group">
+                            <label for="bulkFeatured">Mark All as Featured:</label>
+                            <div class="action-input-group">
+                                <button class="btn btn-warning" id="markFeaturedBtn">Mark Featured</button>
+                                <button class="btn btn-secondary" id="unmarkFeaturedBtn">Unmark Featured</button>
+                            </div>
+                        </div>
+                        <div class="action-group danger">
+                            <label>Delete All Products:</label>
+                            <button class="btn btn-danger" id="deleteAllBtn">Delete All Products</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products List -->
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+                <div id="companyProductsContainer" class="products-grid">
+                    <!-- Company products will be shown here -->
+                </div>
+                <div id="noCompanyProducts" class="no-products" style="display: none;">
+                    <p>No products found for this company.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/company.js"></script>
+</body>
+</html>

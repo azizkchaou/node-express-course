@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Store Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">📦 Store Manager</a>
+            <button class="navbar-toggle" id="navbarToggle">☰</button>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="add-product.html" class="nav-link active" data-page="add">Add Product</a></li>
+                <li><a href="company.html" class="nav-link" data-page="company">Company Mgmt</a></li>
+                <li><a href="filters.html" class="nav-link" data-page="filters">Advanced Search</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>➕ Add New Product</h1>
+            <p class="subtitle">Create a new product in your store</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Product Form Section -->
+            <section class="add-product-section">
+                <h2>Product Information</h2>
+                <form id="addProductForm" class="product-form">
+                    <div class="form-group">
+                        <label for="productName">Product Name: <span class="required">*</span></label>
+                        <input type="text" id="productName" required maxlength="100" placeholder="Enter product name">
+                        <small>Maximum 100 characters</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price ($): <span class="required">*</span></label>
+                        <input type="number" id="productPrice" required min="0" step="0.01" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCompany">Company: <span class="required">*</span></label>
+                        <select id="productCompany" required>
+                            <option value="">Select a company</option>
+                            <option value="ikea">IKEA</option>
+                            <option value="liddy">Liddy</option>
+                            <option value="caressa">Caressa</option>
+                            <option value="marcos">Marcos</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productRating">Rating (0-5):</label>
+                        <input type="number" id="productRating" min="0" max="5" step="0.1" value="4.5" placeholder="4.5">
+                        <small>Default is 4.5</small>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="productFeatured">
+                        <label for="productFeatured">Mark as Featured Product</label>
+                        <small>Featured products appear on the dashboard</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Add Product</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        <a href="products.html" class="btn btn-secondary">View Products</a>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Recently Added Products -->
+            <section class="recent-products-section">
+                <h2>Recently Added Products</h2>
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+                <div id="recentProductsContainer" class="products-grid">
+                    <!-- Recently added products will be shown here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/add-product.js"></script>
+</body>
+</html>
